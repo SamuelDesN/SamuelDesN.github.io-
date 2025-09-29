@@ -752,7 +752,7 @@
     </div>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    // Array de usuarios predefinidos
+    // Usuarios predefinidos
     const users = [
         { username: "10000000A", name: "Administrador CSIF", role: "admin" },
         { username: "20000000A", name: "Administrador CSIF", role: "admin" },
@@ -778,13 +778,7 @@
                 { id: 5, category: "ENFERMERIA", subcategory: "formacion", title: "Curso de especialización en enfermería pediátrica", excerpt: "CSIF organiza formación específica para enfermeros interesados en la atención pediátrica.", image: "https://via.placeholder.com/400x200?text=Formación", date: "Hace 2 días" }
             ]
         },
-        TCAE: {
-            plantillas: [],
-            turnos: [],
-            formacion: [],
-            convenio: [],
-            oposiciones: []
-        },
+        TCAE: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
         ADMINISTRATIVO: { concursos: [] },
         AUXILIAR_ADMINISTRATIVO: { oposiciones: [] },
         CELADOR: { turnos: [] },
@@ -968,24 +962,23 @@
             newsList.innerHTML = '';
             Object.keys(newsData).forEach(category => {
                 if (category === 'todas') {
-                    newsData[category].forEach(news => addNewsToList(news, category));
+                    newsData[category].forEach(news => addNewsToList(news));
                 } else {
-                    Object.keys(newsData[category]).forEach(sub => newsData[category][sub].forEach(news => addNewsToList(news, category)));
+                    Object.keys(newsData[category]).forEach(subcategory => newsData[category][subcategory].forEach(news => addNewsToList(news)));
                 }
             });
         }
 
-        function addNewsToList(news, category) {
+        function addNewsToList(news) {
             const newsItem = document.createElement('div');
             newsItem.className = 'news-item';
             newsItem.innerHTML = `
                 <div class="news-item-title">${news.title}</div>
                 <div class="news-item-actions">
                     <button class="action-btn delete-btn" data-id="${news.id}">Eliminar</button>
-                </div>
-            `;
+                </div>`;
             newsList.appendChild(newsItem);
-            newsItem.querySelector('.delete-btn').addEventListener('click', () => {
+            newsItem.querySelector('.delete-btn').addEventListener('click', function() {
                 if (confirm('¿Estás seguro de que quieres eliminar esta noticia?')) deleteNews(news.id);
             });
         }
@@ -1005,18 +998,16 @@
                 if (category === 'todas') {
                     newsData[category] = newsData[category].filter(news => news.id !== id);
                 } else {
-                    Object.keys(newsData[category]).forEach(sub => {
-                        if (newsData[category][sub]) newsData[category][sub] = newsData[category][sub].filter(news => news.id !== id);
+                    Object.keys(newsData[category]).forEach(subcategory => {
+                        if (newsData[category][subcategory]) newsData[category][subcategory] = newsData[category][subcategory].filter(news => news.id !== id);
                     });
                 }
             });
             localStorage.setItem('csifNewsData', JSON.stringify(newsData));
             loadNewsList();
-            const activeNav = document.querySelector('.nav-item.active');
-            if (activeNav) displayNews(activeNav.getAttribute('data-category'));
         }
 
-        // Navegación principal y subcategorías
+        // Navegación principal
         mainNavItems.forEach(item => {
             item.addEventListener('click', function() {
                 mainNavItems.forEach(i => i.classList.remove('active'));
@@ -1030,7 +1021,8 @@
                         subNav.classList.add('active');
                         const firstSubItem = subNav.querySelector('.sub-nav-item');
                         if (firstSubItem) {
-                            subNav.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+                            const subNavItems = subNav.querySelectorAll('.sub-nav-item');
+                            subNavItems.forEach(item => item.classList.remove('active'));
                             firstSubItem.classList.add('active');
                             displayNews(category, firstSubItem.getAttribute('data-subcategory'));
                         }
@@ -1039,10 +1031,12 @@
             });
         });
 
+        // Subnavegación
         document.querySelectorAll('.sub-nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const subNav = this.closest('.sub-nav');
-                subNav.querySelectorAll('.sub-nav-item').forEach(i => i.classList.remove('active'));
+                const subNavItems = subNav.querySelectorAll('.sub-nav-item');
+                subNavItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
                 const category = subNav.id.replace('subnav-', '');
                 const subcategory = this.getAttribute('data-subcategory');
@@ -1054,9 +1048,15 @@
         function displayNews(category, subcategory = null) {
             newsContainer.innerHTML = '';
             let newsToDisplay = [];
+
             if (category === 'todas') newsToDisplay = newsData.todas;
             else if (subcategory && newsData[category] && newsData[category][subcategory]) newsToDisplay = newsData[category][subcategory];
-            else if (newsData[category]) Object.values(newsData[category]).forEach(subcat => newsToDisplay = newsToDisplay.concat(subcat));
+            else if (category === 'MEDICINA' && subcategory && newsData[subcategory]) {
+                newsToDisplay = [];
+                Object.values(newsData[subcategory]).forEach(subcatNews => newsToDisplay = newsToDisplay.concat(subcatNews));
+            } else if (newsData[category]) {
+                Object.values(newsData[category]).forEach(subcatNews => newsToDisplay = newsToDisplay.concat(subcatNews));
+            }
 
             if (newsToDisplay.length === 0) {
                 newsContainer.innerHTML = '<p>No hay noticias disponibles para esta categoría.</p>';
@@ -1072,23 +1072,13 @@
                         <span class="news-category">${news.category.charAt(0).toUpperCase() + news.category.slice(1)}</span>
                         <h3 class="news-title">${news.title}</h3>
                         <p class="news-excerpt">${news.excerpt}</p>
-                        <div class="news-meta">
-                            <span>${news.date}</span>
-                            <span>CSIF</span>
-                        </div>
-                    </div>
-                `;
+                        <div class="news-meta"><span>${news.date}</span><span>CSIF</span></div>
+                    </div>`;
                 newsContainer.appendChild(newsCard);
             });
         }
-
-        // Botón flotante
-        const floatingBtn = document.querySelector('.floating-btn');
-        floatingBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-        window.addEventListener('scroll', () => floatingBtn.style.display = window.scrollY > 300 ? 'flex' : 'none');
     });
 </script>
 
-
-</body>
+    </body>
 </html>
