@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CSIF Noticias</title>
+    <title>CSIF Informa</title>
     <style>
         /* Estilos generales */
         * {
@@ -29,11 +29,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_CSIF.svg/1200px-Logo_CSIF.svg.png');
+            background-image: url('csif.png');
             background-repeat: no-repeat;
             background-position: center;
-            background-size: 70%;
-            opacity: 0.05;
+            background-size: 90%;
+            opacity: 0.3;
             z-index: -1;
             pointer-events: none;
         }
@@ -60,11 +60,11 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 30px;
         }
         
         .csif-logo {
-            height: 40px;
+            height: 80px;
             width: auto;
         }
         
@@ -78,7 +78,7 @@
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 30px;
             transition: all 0.3s ease;
         }
         
@@ -543,7 +543,7 @@
     <header>
         <div class="logo">CSIF Noticias</div>
         <div class="header-right">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Logo_CSIF.svg/200px-Logo_CSIF.svg.png" alt="Logo CSIF" class="csif-logo">
+            <img src="csif.png" alt="Logo CSIF" class="csif-logo">
             <button class="admin-btn" id="adminBtn">
                 <span class="user-icon">⚙</span>
                 <span>Administrar</span>
@@ -604,12 +604,18 @@
                                 <option value="AUXILIAR_ADMINISTRATIVO">AUXILIAR ADMINISTRATIVO</option>
                                 <option value="CELADOR">CELADOR</option>
                                 <option value="TECNICO_LABORATORIO">TÉCNICO DE LABORATORIO</option>
+                                <option value="MEDICINA">MEDICINA</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="newsSubcategory">Subcategoría:</label>
                             <select id="newsSubcategory" required>
-                                <option value="">-- Selecciona subcategoría --</option>
+                                <option value="">-- Selecciona categoría --</option>
+                                <option value="ODONTOLOGIA">ODONTOLOGIA</option>
+                                <option value="VACSULAR">VASCULAR</option>
+                                <option value="GINECOLOGIA">GINECOLOGIA</option>
+                                <option value="TRAUMATOLOGIA">TRAUMATOLOGIA</option>
+                                <option value="UROLOGIA">UROLOGIA</option>
                             </select>
                         </div>
                     </div>
@@ -648,11 +654,12 @@
     <nav class="main-nav">
         <div class="nav-container">
             <div class="nav-item active" data-category="todas">Todas</div>
-            <div class="nav-item" data-category="ENFERMERIA">ENFERMERIA</div>
-            <div class="nav-item" data-category="TCAE">TCAE</div>
             <div class="nav-item" data-category="ADMINISTRATIVO">ADMINISTRATIVO</div>
             <div class="nav-item" data-category="AUXILIAR_ADMINISTRATIVO">AUXILIAR ADMINISTRATIVO</div>
             <div class="nav-item" data-category="CELADOR">CELADOR</div>
+            <div class="nav-item" data-category="ENFERMERIA">ENFERMERIA</div>
+            <div class="nav-item" data-category="MEDICINA">MEDICINA</div>
+            <div class="nav-item" data-category="TCAE">TCAE</div>
             <div class="nav-item" data-category="TECNICO_LABORATORIO">TÉCNICO DE LABORATORIO</div>
         </div>
     </nav>
@@ -660,7 +667,7 @@
     <!-- Subnavegación para ENFERMERIA -->
     <div class="sub-nav" id="subnav-ENFERMERIA">
         <div class="sub-nav-container">
-            <div class="sub-nav-item active" data-subcategory="ODONTOLOGIA">ODONTOLOGIA</div>
+            <div class="sub-nav-item active" data-subcategory="plantillas">Plantillas</div>
             <div class="sub-nav-item" data-subcategory="turnos">Turnos</div>
             <div class="sub-nav-item" data-subcategory="formacion">Formación</div>
             <div class="sub-nav-item" data-subcategory="convenio">Convenio</div>
@@ -722,7 +729,19 @@
             <div class="sub-nav-item" data-subcategory="oposiciones">Oposiciones</div>
         </div>
     </div>
-    
+
+     <!-- Subnavegación para MEDICINA -->
+    <div class="sub-nav" id="subnav-MEDICINA">
+        <div class="sub-nav-container">
+            <div class="sub-nav-item active" data-subcategory="ODONTOLOGIA">ODONTOLOGIA</div>
+            <div class="sub-nav-item" data-subcategory="VASCULAR">VASCULAR</div>
+            <div class="sub-nav-item" data-subcategory="GINECOLOGIA">GINECOLOGIA</div>
+            <div class="sub-nav-item" data-subcategory="TRAUMATOLOGIA">TRAUMATOLOGIA</div>
+            <div class="sub-nav-item" data-subcategory="UROLOGIA">OUROLOGIA</div>
+        </div>
+    </div>
+
+
     <!-- Contenido principal -->
     <main>
         <h2 class="section-title" id="current-category">Todas las Noticias</h2>
@@ -742,7 +761,7 @@
             <a href="#" class="footer-link">Aviso Legal</a>
         </div>
         <div class="copyright">
-            &copy; 2023 CSIF - Central Sindical Independiente y de Funcionarios. Todos los derechos reservados.
+            &copy; 2025 CSIF - Central Sindical Independiente y de Funcionarios. Todos los derechos reservados.
         </div>
     </footer>
     
@@ -752,43 +771,70 @@
     </div>
             <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-    // Usuarios predefinidos
+    // Array de usuarios predefinidos (username=dni) (name= nombre del afiliado)
     const users = [
         { username: "10000000A", name: "Administrador CSIF", role: "admin" },
         { username: "20000000A", name: "Administrador CSIF", role: "admin" },
+        { username: "30000000A", name: "Administrador CSIF", role: "admin" },
+        { username: "40000000A", name: "Administrador CSIF", role: "admin" },
+        { username: "50000000A", name: "Administrador CSIF", role: "admin" },
         { username: "00000001A", name: "María López", role: "Afiliado" },
         { username: "00000002A", name: "Carlos Rodríguez", role: "Afiliado" },
-        { username: "00000003A", name: "Ana García", role: "Afiliado" }
+        { username: "00000003A", name: "Ana García", role: "Afiliado" },
+        { username: "00000004A", name: "Javier Martínez", role: "Afiliado" },
+        { username: "00000005A", name: "Laura Fernández", role: "Afiliado" }
     ];
 
-    // Datos de noticias
+    // Datos de ejemplo para las noticias
     let newsData = {
         todas: [
             { id: 1, category: "ENFERMERIA", subcategory: "plantillas", title: "CSIF logra aumento de plantilla de enfermería en hospitales", excerpt: "El sindicato consigue la contratación de 200 nuevos profesionales de enfermería para cubrir déficits en la sanidad pública.", image: "https://via.placeholder.com/400x200?text=Enfermería", date: "Hace 2 horas" },
-            { id: 2, category: "TCAE", subcategory: "turnos", title: "Mejoras en los turnos para TCAE en atención primaria", excerpt: "CSIF negocia mejoras en la rotación de turnos para los Técnicos en Cuidados Auxiliares de Enfermería.", image: "https://via.placeholder.com/400x200?text=TCAE", date: "Hace 5 horas" }
+            { id: 2, category: "TCAE", subcategory: "turnos", title: "Mejoras en los turnos para TCAE en atención primaria", excerpt: "CSIF negocia mejoras en la rotación de turnos para los Técnicos en Cuidados Auxiliares de Enfermería.", image: "https://via.placeholder.com/400x200?text=TCAE", date: "Hace 5 horas" },
+            { id: 3, category: "ADMINISTRATIVO", subcategory: "concursos", title: "Nuevo concurso de traslados para personal administrativo", excerpt: "Se publican las bases del nuevo concurso de traslados que beneficiará a miles de trabajadores administrativos.", image: "https://via.placeholder.com/400x200?text=Administrativo", date: "Hace 1 día" },
+            { id: 4, category: "AUXILIAR_ADMINISTRATIVO", subcategory: "formacion", title: "CSIF organiza cursos de formación para auxiliares administrativos", excerpt: "Programa formativo gratuito para auxiliares administrativos sobre nuevas herramientas digitales.", image: "https://via.placeholder.com/400x200?text=Auxiliar", date: "Hace 1 día" },
+            { id: 5, category: "CELADOR", subcategory: "convenio", title: "Avances en la negociación del convenio para celadores", excerpt: "CSIF consigue mejoras salariales y en condiciones laborales para el colectivo de celadores.", image: "https://via.placeholder.com/400x200?text=Celador", date: "Hace 2 días" },
+            { id: 6, category: "TECNICO_LABORATORIO", subcategory: "oposiciones", title: "Convocadas nuevas plazas para técnicos de laboratorio", excerpt: "Oferta de empleo público con 150 plazas para técnicos de laboratorio en toda la comunidad.", image: "https://via.placeholder.com/400x200?text=Laboratorio", date: "Hace 2 días" }
         ],
         ENFERMERIA: {
             plantillas: [
-                { id: 3, category: "ENFERMERIA", subcategory: "plantillas", title: "CSIF exige más plantilla de enfermería en UCIs", excerpt: "El sindicato alerta sobre la sobrecarga laboral en las unidades de cuidados intensivos.", image: "https://via.placeholder.com/400x200?text=UCI", date: "Hace 3 horas" }
+                { id: 7, category: "ENFERMERIA", subcategory: "plantillas", title: "CSIF exige más plantilla de enfermería en UCIs", excerpt: "El sindicato alerta sobre la sobrecarga laboral en las unidades de cuidados intensivos.", image: "https://via.placeholder.com/400x200?text=UCI", date: "Hace 3 horas" },
+                { id: 8, category: "ENFERMERIA", subcategory: "plantillas", title: "Ampliación de plantilla en centros de salud", excerpt: "Nuevos contratos para enfermería en atención primaria gracias a la presión sindical.", image: "https://via.placeholder.com/400x200?text=Centros+Salud", date: "Hace 1 día" }
             ],
             turnos: [
-                { id: 4, category: "ENFERMERIA", subcategory: "turnos", title: "Nuevo sistema de turnos para enfermería", excerpt: "Implementación de un modelo de turnos más equilibrado que mejora la conciliación familiar.", image: "https://via.placeholder.com/400x200?text=Turnos", date: "Hace 4 horas" }
+                { id: 9, category: "ENFERMERIA", subcategory: "turnos", title: "Nuevo sistema de turnos para enfermería", excerpt: "Implementación de un modelo de turnos más equilibrado que mejora la conciliación familiar.", image: "https://via.placeholder.com/400x200?text=Turnos", date: "Hace 4 horas" }
             ],
             formacion: [
-                { id: 5, category: "ENFERMERIA", subcategory: "formacion", title: "Curso de especialización en enfermería pediátrica", excerpt: "CSIF organiza formación específica para enfermeros interesados en la atención pediátrica.", image: "https://via.placeholder.com/400x200?text=Formación", date: "Hace 2 días" }
+                { id: 10, category: "ENFERMERIA", subcategory: "formacion", title: "Curso de especialización en enfermería pediátrica", excerpt: "CSIF organiza formación específica para enfermeros interesados en la atención pediátrica.", image: "https://via.placeholder.com/400x200?text=Formación", date: "Hace 2 días" }
             ]
         },
-        TCAE: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
-        ADMINISTRATIVO: { concursos: [] },
-        AUXILIAR_ADMINISTRATIVO: { oposiciones: [] },
-        CELADOR: { turnos: [] },
-        TECNICO_LABORATORIO: { formacion: [] },
-        // Especialidades médicas
-        ODONTOLOGIA: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
-        TRAUMATOLOGIA: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
-        VASCULAR: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
-        GINECOLOGIA: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] },
-        UROLOGIA: { plantillas: [], turnos: [], formacion: [], convenio: [], oposiciones: [] }
+        TCAE: {
+            plantillas: [
+                { id: 11, category: "TCAE", subcategory: "plantillas", title: "Refuerzo de plantilla TCAE en residencias", excerpt: "Contratación de 300 TCAE para cubrir necesidades en residencias de mayores.", image: "https://via.placeholder.com/400x200?text=Residencias", date: "Hace 6 horas" }
+            ],
+            convenio: [
+                { id: 12, category: "TCAE", subcategory: "convenio", title: "Mejoras salariales para TCAE en nuevo convenio", excerpt: "CSIF logra incremento del 4% en el salario base para técnicos auxiliares.", image: "https://via.placeholder.com/400x200?text=Salario", date: "Hace 1 día" }
+            ]
+        },
+        ADMINISTRATIVO: {
+            concursos: [
+                { id: 13, category: "ADMINISTRATIVO", subcategory: "concursos", title: "Nuevo concurso de méritos para administrativos", excerpt: "Publicadas las bases del concurso que permitirá promocionar a puestos de mayor responsabilidad.", image: "https://via.placeholder.com/400x200?text=Concursos", date: "Hace 3 horas" }
+            ]
+        },
+        AUXILIAR_ADMINISTRATIVO: {
+            oposiciones: [
+                { id: 14, category: "AUXILIAR_ADMINISTRATIVO", subcategory: "oposiciones", title: "Oferta de 500 plazas para auxiliares administrativos", excerpt: "Convocatoria pública para cubrir plazas de auxiliar administrativo en toda la comunidad.", image: "https://via.placeholder.com/400x200?text=Oposiciones", date: "Hace 5 horas" }
+            ]
+        },
+        CELADOR: {
+            turnos: [
+                { id: 15, category: "CELADOR", subcategory: "turnos", title: "Mejora en los turnos de celadores de urgencias", excerpt: "Nuevo sistema que reduce la rotación excesiva y mejora las condiciones laborales.", image: "https://via.placeholder.com/400x200?text=Urgencias", date: "Hace 1 día" }
+            ]
+        },
+        TECNICO_LABORATORIO: {
+            formacion: [
+                { id: 16, category: "TECNICO_LABORATORIO", subcategory: "formacion", title: "Curso de actualización para técnicos de laboratorio", excerpt: "Formación en nuevas técnicas de análisis clínicos para técnicos de laboratorio.", image: "https://via.placeholder.com/400x200?text=Análisis", date: "Hace 2 días" }
+            ]
+        }
     };
 
     // Cargar noticias desde localStorage si existen
@@ -796,13 +842,14 @@
         newsData = JSON.parse(localStorage.getItem('csifNewsData'));
     }
 
+    // Funcionalidad para la aplicación
     document.addEventListener('DOMContentLoaded', function() {
         const mainNavItems = document.querySelectorAll('.nav-item');
         const subNavs = document.querySelectorAll('.sub-nav');
         const currentCategoryTitle = document.getElementById('current-category');
         const newsContainer = document.getElementById('news-container');
-
-        // Sistema de usuarios
+        
+        // Elementos del sistema de usuarios
         const userBtn = document.getElementById('userBtn');
         const loginModal = document.getElementById('loginModal');
         const closeModal = document.getElementById('closeModal');
@@ -822,247 +869,365 @@
         const usersList = document.getElementById('usersList');
         const newsCategorySelect = document.getElementById('newsCategory');
         const newsSubcategorySelect = document.getElementById('newsSubcategory');
-
-        // Llenar select de usuarios
+        
+        // Llenar el select de usuarios
         users.forEach(user => {
             const option = document.createElement('option');
             option.value = user.username;
             option.textContent = `${user.name} (${user.role})`;
             usernameSelect.appendChild(option);
         });
+        
+        // Configurar subcategorías dinámicas
 
-        // Subcategorías dinámicas
-        const subcategoriesMap = {
-            ENFERMERIA: ["ODONTOLOGIA", "TRUMATOLOGIA", "VASCULAR", "GINECOLOGIA", "UROLOGIA"],
+               const subcategoriesMap = {
+            ENFERMERIA: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             TCAE: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             ADMINISTRATIVO: ["concursos", "traslados", "formacion", "convenio", "oposiciones"],
             AUXILIAR_ADMINISTRATIVO: ["concursos", "traslados", "formacion", "convenio", "oposiciones"],
             CELADOR: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             TECNICO_LABORATORIO: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
+            MEDICINA: ["ODONTOLOGIA", "TRAUMATOLOGIA", "VASCULAR", "GINECOLOGIA", "UROLOGIA"],
             ODONTOLOGIA: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             TRAUMATOLOGIA: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             VASCULAR: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             GINECOLOGIA: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"],
             UROLOGIA: ["plantillas", "turnos", "formacion", "convenio", "oposiciones"]
         };
-
-        // Llenar subcategorías al cambiar categoría
+        
         newsCategorySelect.addEventListener('change', function() {
             const category = this.value;
             newsSubcategorySelect.innerHTML = '<option value="">-- Selecciona subcategoría --</option>';
+            
             if (category && subcategoriesMap[category]) {
                 subcategoriesMap[category].forEach(sub => {
                     const option = document.createElement('option');
                     option.value = sub;
                     option.textContent = sub.charAt(0).toUpperCase() + sub.slice(1);
                     newsSubcategorySelect.appendChild(option);  
-                });
+            });
             }
         });
-
-        // Verificar login
+        
+        
+        // Verificar si hay un usuario logueado
         checkLoginStatus();
-
+        
         // Inicializar con todas las noticias
         displayNews('todas');
-
-        // Sistema de login
-        userBtn.addEventListener('click', () => loginModal.style.display = 'flex');
-        closeModal.addEventListener('click', () => { loginModal.style.display = 'none'; loginMessage.style.display = 'none'; });
-        window.addEventListener('click', function(event) {
-            if (event.target === loginModal) loginModal.style.display = 'none';
-            if (event.target === adminModal) adminModal.style.display = 'none';
+        
+        // Sistema de usuarios
+        userBtn.addEventListener('click', function() {
+            loginModal.style.display = 'flex';
         });
-
+        
+        closeModal.addEventListener('click', function() {
+            loginModal.style.display = 'none';
+            loginMessage.style.display = 'none';
+        });
+        
+        // Cerrar modal al hacer clic fuera
+        window.addEventListener('click', function(event) {
+            if (event.target === loginModal) {
+                loginModal.style.display = 'none';
+                loginMessage.style.display = 'none';
+            }
+            if (event.target === adminModal) {
+                adminModal.style.display = 'none';
+            }
+        });
+        
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const username = usernameSelect.value;
+            
+            // Verificar usuario
             const user = users.find(u => u.username === username);
+            
             if (user) {
+                // Iniciar sesión
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 updateUIForLoggedInUser(user);
                 loginModal.style.display = 'none';
                 loginForm.reset();
                 loginMessage.style.display = 'none';
             } else {
+                // Mostrar mensaje de error
                 loginMessage.textContent = 'Usuario no válido';
                 loginMessage.style.display = 'block';
             }
         });
-
+        
         logoutBtn.addEventListener('click', function() {
             localStorage.removeItem('currentUser');
             updateUIForLoggedOutUser();
         });
-
-        // Admin
+        
+        // Sistema de administración
         adminBtn.addEventListener('click', function() {
             adminModal.style.display = 'flex';
             loadNewsList();
             loadUsersList();
         });
-        closeAdminModal.addEventListener('click', () => adminModal.style.display = 'none');
-
+        
+        closeAdminModal.addEventListener('click', function() {
+            adminModal.style.display = 'none';
+        });
+        
+        // Cambiar pestañas en el panel de administración
         adminTabs.forEach(tab => {
             tab.addEventListener('click', function() {
                 const tabId = this.getAttribute('data-tab');
+                
+                // Actualizar pestañas activas
                 adminTabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
+                
+                // Mostrar panel correspondiente
                 adminPanels.forEach(panel => {
                     panel.classList.remove('active');
-                    if (panel.id === `${tabId}-panel`) panel.classList.add('active');
+                    if (panel.id === `${tabId}-panel`) {
+                        panel.classList.add('active');
+                    }
                 });
             });
         });
-
-        // Agregar noticia
+        
+        // Formulario para agregar noticias
         newsForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const category = newsCategorySelect.value;
             const subcategory = newsSubcategorySelect.value;
             const title = document.getElementById('newsTitle').value.trim();
             const excerpt = document.getElementById('newsExcerpt').value.trim();
             const image = document.getElementById('newsImage').value.trim();
-
+            
             if (!category || !subcategory || !title || !excerpt || !image) {
                 alert("Todos los campos son obligatorios");
                 return;
             }
-
-            const newNews = { id: Date.now(), category, subcategory, title, excerpt, image, date: "Recién agregada" };
-            if (!newsData[category]) newsData[category] = {};
-            if (!newsData[category][subcategory]) newsData[category][subcategory] = [];
+            
+            // Crear nueva noticia
+            const newNews = {
+                id: Date.now(), // ID único basado en timestamp
+                category: category,
+                subcategory: subcategory,
+                title: title,
+                excerpt: excerpt,
+                image: image,
+                date: "Recién agregada"
+            };
+            
+            // Agregar a newsData
+            if (!newsData[category]) {
+                newsData[category] = {};
+            }
+            
+            if (!newsData[category][subcategory]) {
+                newsData[category][subcategory] = [];
+            }
+            
             newsData[category][subcategory].push(newNews);
+            
+            // También agregar a "todas"
             newsData.todas.push(newNews);
+            
+            // Guardar en localStorage
             localStorage.setItem('csifNewsData', JSON.stringify(newsData));
+            
+            // Recargar lista de noticias
             loadNewsList();
+            
+            // Limpiar formulario
             newsForm.reset();
+            
+            // Mostrar mensaje de éxito
             alert('Noticia agregada correctamente');
         });
-
+        
         function checkLoginStatus() {
             const currentUser = localStorage.getItem('currentUser');
-            if (currentUser) updateUIForLoggedInUser(JSON.parse(currentUser));
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                updateUIForLoggedInUser(user);
+            }
         }
-
+        
         function updateUIForLoggedInUser(user) {
             userBtn.style.display = 'none';
             userInfo.style.display = 'flex';
             userName.textContent = user.name;
-            if (user.role === 'admin') adminBtn.style.display = 'flex';
+            
+            // Mostrar botón de administración solo para admins
+            if (user.role === 'admin') {
+                adminBtn.style.display = 'flex';
+            }
         }
-
+        
         function updateUIForLoggedOutUser() {
             userBtn.style.display = 'flex';
             userInfo.style.display = 'none';
             adminBtn.style.display = 'none';
         }
-
+        
         function loadNewsList() {
             newsList.innerHTML = '';
+            
+            // Cargar todas las noticias
             Object.keys(newsData).forEach(category => {
                 if (category === 'todas') {
-                    newsData[category].forEach(news => addNewsToList(news));
+                    newsData[category].forEach(news => {
+                        addNewsToList(news, category);
+                    });
                 } else {
-                    Object.keys(newsData[category]).forEach(subcategory => newsData[category][subcategory].forEach(news => addNewsToList(news)));
+                    Object.keys(newsData[category]).forEach(subcategory => {
+                        newsData[category][subcategory].forEach(news => {
+                            addNewsToList(news, category);
+                        });
+                    });
                 }
             });
         }
-
-        function addNewsToList(news) {
+        
+        function addNewsToList(news, category) {
             const newsItem = document.createElement('div');
             newsItem.className = 'news-item';
             newsItem.innerHTML = `
                 <div class="news-item-title">${news.title}</div>
                 <div class="news-item-actions">
+                    <button class="action-btn edit-btn" data-id="${news.id}">Editar</button>
                     <button class="action-btn delete-btn" data-id="${news.id}">Eliminar</button>
-                </div>`;
+                </div>
+            `;
             newsList.appendChild(newsItem);
+            
+            // Agregar event listeners para los botones
             newsItem.querySelector('.delete-btn').addEventListener('click', function() {
-                if (confirm('¿Estás seguro de que quieres eliminar esta noticia?')) deleteNews(news.id);
+                if (confirm('¿Estás seguro de que quieres eliminar esta noticia?')) {
+                    deleteNews(news.id);
+                }
             });
         }
-
+        
         function loadUsersList() {
             usersList.innerHTML = '';
+            
             users.forEach(user => {
                 const userItem = document.createElement('div');
                 userItem.className = 'news-item';
-                userItem.innerHTML = `<div class="news-item-title">${user.name} (${user.username}) - ${user.role}</div>`;
+                userItem.innerHTML = `
+                    <div class="news-item-title">${user.name} (${user.username}) - ${user.role}</div>
+                `;
                 usersList.appendChild(userItem);
             });
         }
-
+        
         function deleteNews(id) {
+            // Buscar y eliminar la noticia de todas las categorías
             Object.keys(newsData).forEach(category => {
                 if (category === 'todas') {
                     newsData[category] = newsData[category].filter(news => news.id !== id);
                 } else {
                     Object.keys(newsData[category]).forEach(subcategory => {
-                        if (newsData[category][subcategory]) newsData[category][subcategory] = newsData[category][subcategory].filter(news => news.id !== id);
+                        if (newsData[category][subcategory]) {
+                            newsData[category][subcategory] = newsData[category][subcategory].filter(news => news.id !== id);
+                        }
                     });
                 }
             });
+            
+            // Guardar en localStorage
             localStorage.setItem('csifNewsData', JSON.stringify(newsData));
+            
+            // Recargar lista
             loadNewsList();
+            
+            // Actualizar vista principal si es necesario
+            const activeNav = document.querySelector('.nav-item.active');
+            if (activeNav) {
+                const currentCategory = activeNav.getAttribute('data-category');
+                displayNews(currentCategory);
+            }
         }
-
-        // Navegación principal
+        
+        // Cambiar categorías principales
         mainNavItems.forEach(item => {
             item.addEventListener('click', function() {
+                // Quitar clase active de todos los elementos
                 mainNavItems.forEach(i => i.classList.remove('active'));
+                // Agregar clase active al elemento clickeado
                 this.classList.add('active');
+                
                 const category = this.getAttribute('data-category');
                 currentCategoryTitle.textContent = this.textContent;
-                subNavs.forEach(subNav => subNav.classList.remove('active'));
+                
+                // Ocultar todas las subnavegaciones
+                subNavs.forEach(subNav => {
+                    subNav.classList.remove('active');
+                });
+                
+                // Mostrar subnavegación correspondiente si no es "todas"
                 if (category !== 'todas') {
                     const subNav = document.getElementById(`subnav-${category}`);
                     if (subNav) {
                         subNav.classList.add('active');
+                        
+                        // Activar el primer elemento de la subnavegación
                         const firstSubItem = subNav.querySelector('.sub-nav-item');
                         if (firstSubItem) {
                             const subNavItems = subNav.querySelectorAll('.sub-nav-item');
                             subNavItems.forEach(item => item.classList.remove('active'));
                             firstSubItem.classList.add('active');
+                            
+                            // Mostrar noticias de la primera subcategoría
                             displayNews(category, firstSubItem.getAttribute('data-subcategory'));
                         }
                     }
-                } else displayNews('todas');
+                } else {
+                    // Mostrar todas las noticias
+                    displayNews('todas');
+                }
             });
         });
-
-        // Subnavegación
+        
+        // Cambiar subcategorías
         document.querySelectorAll('.sub-nav-item').forEach(item => {
             item.addEventListener('click', function() {
                 const subNav = this.closest('.sub-nav');
                 const subNavItems = subNav.querySelectorAll('.sub-nav-item');
                 subNavItems.forEach(i => i.classList.remove('active'));
                 this.classList.add('active');
+                
                 const category = subNav.id.replace('subnav-', '');
                 const subcategory = this.getAttribute('data-subcategory');
+                
                 displayNews(category, subcategory);
             });
         });
-
-        // Mostrar noticias
+        
+        // Función para mostrar noticias
         function displayNews(category, subcategory = null) {
             newsContainer.innerHTML = '';
+            
             let newsToDisplay = [];
-
-            if (category === 'todas') newsToDisplay = newsData.todas;
-            else if (subcategory && newsData[category] && newsData[category][subcategory]) newsToDisplay = newsData[category][subcategory];
-            else if (category === 'MEDICINA' && subcategory && newsData[subcategory]) {
-                newsToDisplay = [];
-                Object.values(newsData[subcategory]).forEach(subcatNews => newsToDisplay = newsToDisplay.concat(subcatNews));
+            
+            if (category === 'todas') {
+                newsToDisplay = newsData.todas;
+            } else if (subcategory && newsData[category] && newsData[category][subcategory]) {
+                newsToDisplay = newsData[category][subcategory];
             } else if (newsData[category]) {
-                Object.values(newsData[category]).forEach(subcatNews => newsToDisplay = newsToDisplay.concat(subcatNews));
+                // Si no hay subcategoría específica, mostrar todas las noticias de la categoría
+                Object.values(newsData[category]).forEach(subcatNews => {
+                    newsToDisplay = newsToDisplay.concat(subcatNews);
+                });
             }
-
+            
             if (newsToDisplay.length === 0) {
                 newsContainer.innerHTML = '<p>No hay noticias disponibles para esta categoría.</p>';
                 return;
             }
-
+            
             newsToDisplay.forEach(news => {
                 const newsCard = document.createElement('div');
                 newsCard.className = 'news-card';
@@ -1072,13 +1237,35 @@
                         <span class="news-category">${news.category.charAt(0).toUpperCase() + news.category.slice(1)}</span>
                         <h3 class="news-title">${news.title}</h3>
                         <p class="news-excerpt">${news.excerpt}</p>
-                        <div class="news-meta"><span>${news.date}</span><span>CSIF</span></div>
-                    </div>`;
+                        <div class="news-meta">
+                            <span>${news.date}</span>
+                            <span>CSIF</span>
+                        </div>
+                    </div>
+                `;
                 newsContainer.appendChild(newsCard);
             });
         }
+        
+        // Botón flotante para ir al inicio
+        const floatingBtn = document.querySelector('.floating-btn');
+        floatingBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Mostrar/ocultar botón flotante según el scroll
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                floatingBtn.style.display = 'flex';
+            } else {
+                floatingBtn.style.display = 'none';
+            }
+        });
     });
 </script>
 
-    </body>
+</body>
 </html>
