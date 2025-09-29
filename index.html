@@ -852,7 +852,7 @@
             users.forEach(user => {
                 const option = document.createElement('option');
                 option.value = user.username;
-                option.textContent = ${user.name} (${user.role});
+                option.textContent = `${user.name} (${user.role})`;
                 usernameSelect.appendChild(option);
             });
             
